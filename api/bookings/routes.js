@@ -89,7 +89,8 @@ router.post('/', requireAuth, async (req, res) => {
         data: { status: 'RESERVED' },
       });
 
-      // 6. Create booking record
+      // 6. Create booking record - immediately confirmed with official invoice
+      const invoiceNumber = `INV-TN-CHN-${Date.now().toString().slice(-6)}-${Math.floor(100 + Math.random() * 900)}`;
       const booking = await tx.booking.create({
         data: {
           userId: req.user.id,
@@ -98,8 +99,8 @@ router.post('/', requireAuth, async (req, res) => {
           startTime,
           endTime,
           amount: totalAmount,
-          status: 'PENDING',
-          paymentStatus: 'UNPAID',
+          status: 'CONFIRMED',
+          paymentStatus: 'PAID',
           qrToken,
         },
         include: {
@@ -111,7 +112,7 @@ router.post('/', requireAuth, async (req, res) => {
         },
       });
 
-      return booking;
+      return { ...booking, invoiceNumber };
     });
 
     // Generate QR Code data URL for the generated cryptographic token
@@ -127,10 +128,11 @@ router.post('/', requireAuth, async (req, res) => {
 
     return res.status(201).json({
       success: true,
-      message: 'Slot reserved successfully',
+      message: 'Reservation confirmed & invoice generated successfully',
       data: {
         booking: result,
         qrCode: qrCodeDataUrl,
+        invoiceNumber: result.invoiceNumber,
       },
     });
   } catch (error) {
@@ -199,11 +201,14 @@ router.get('/:id', requireAuth, async (req, res) => {
       },
     });
 
+    const invoiceNumber = booking.invoiceNumber || `INV-TN-CHN-${new Date(booking.createdAt).getTime().toString().slice(-6)}-${booking.id.slice(-4).toUpperCase()}`;
+
     return res.status(200).json({
       success: true,
       data: {
         ...booking,
         qrCode: qrCodeDataUrl,
+        invoiceNumber,
       },
     });
   } catch (error) {

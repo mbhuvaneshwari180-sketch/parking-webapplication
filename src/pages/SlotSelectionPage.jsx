@@ -151,7 +151,7 @@ export default function SlotSelectionPage() {
             <div>
               <div className="text-xs text-slate-400">Selected Bay ({selectedSlot.type})</div>
               <div className="text-base font-extrabold text-white">
-                ${selectedSlot.pricePerHour.toFixed(2)} <span className="text-xs text-slate-400 font-normal">/ hour</span>
+                ₹{selectedSlot.pricePerHour.toFixed(2)} <span className="text-xs text-slate-400 font-normal">/ hour</span>
               </div>
             </div>
           </div>

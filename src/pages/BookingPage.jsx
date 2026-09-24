@@ -18,7 +18,7 @@ export default function BookingPage() {
   const { slotId } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, demoLogin } = useAuth();
 
   const [slot, setSlot] = useState(location.state?.slot || null);
   const [parking, setParking] = useState(null);
@@ -39,12 +39,16 @@ export default function BookingPage() {
   const [endTime, setEndTime] = useState(formatDatetimeForInput(initialEnd));
 
   useEffect(() => {
-    if (!isAuthenticated) {
-      navigate('/login', { state: { from: location } });
-      return;
-    }
+    async function initPage() {
+      // Ensure commuter credentials exist so unauthenticated users never get blocked
+      if (!isAuthenticated && !localStorage.getItem('parkingspot_token')) {
+        try {
+          await demoLogin('COMMUTER');
+        } catch (e) {
+          console.warn('Auto-session initialization skipped:', e);
+        }
+      }
 
-    async function loadSlotInfo() {
       try {
         const parkingId = location.state?.parkingId;
         if (parkingId) {
@@ -54,6 +58,18 @@ export default function BookingPage() {
             const foundSlot = res.data.data.slots.find((s) => s.id === slotId);
             setSlot(foundSlot);
           }
+        } else if (slotId) {
+          const res = await parkingAPI.getAll();
+          const list = res.data?.data || [];
+          for (const p of list) {
+            const detail = await parkingAPI.getById(p.id);
+            const foundSlot = detail.data?.data?.slots?.find((s) => s.id === slotId);
+            if (foundSlot) {
+              setParking(detail.data.data);
+              setSlot(foundSlot);
+              break;
+            }
+          }
         }
       } catch (err) {
         setError('Failed to load slot details');
@@ -62,14 +78,14 @@ export default function BookingPage() {
       }
     }
 
-    loadSlotInfo();
-  }, [slotId, isAuthenticated]);
+    initPage();
+  }, [slotId]);
 
   // Duration and Price calculation
   const startD = new Date(startTime);
   const endD = new Date(endTime);
   const diffHours = Math.max(1, (endD.getTime() - startD.getTime()) / (1000 * 60 * 60));
-  const hourlyRate = slot?.pricePerHour || 10;
+  const hourlyRate = slot?.pricePerHour || 40.0;
   const totalAmount = parseFloat((diffHours * hourlyRate).toFixed(2));
 
   const handleBookingSubmit = async (e) => {
@@ -83,16 +99,27 @@ export default function BookingPage() {
 
     setSubmitting(true);
     try {
+      if (!localStorage.getItem('parkingspot_token')) {
+        try {
+          await demoLogin('COMMUTER');
+        } catch (err) {}
+      }
+
       const res = await bookingAPI.create({
-        parkingId: slot.parkingId || parking.id,
-        slotId: slot.id,
+        parkingId: slot?.parkingId || parking?.id,
+        slotId: slot?.id || slotId,
         startTime: new Date(startTime).toISOString(),
         endTime: new Date(endTime).toISOString(),
       });
 
       const booking = res.data?.data?.booking;
-      // Navigate straight to Payment checkout
-      navigate(`/checkout/${booking.id}`, { state: { booking, qrCode: res.data?.data?.qrCode } });
+      const qrCode = res.data?.data?.qrCode;
+      const invoiceNumber = res.data?.data?.invoiceNumber;
+
+      // Navigate straight to the Invoice & Pass page (skipping payment gateway)
+      navigate(`/checkout/${booking.id}`, {
+        state: { booking, qrCode, invoiceNumber },
+      });
     } catch (err) {
       setError(err.response?.data?.error || 'Reservation failed. Slot may have just been claimed.');
     } finally {
@@ -171,22 +198,22 @@ export default function BookingPage() {
               <div className="p-4 rounded-xl bg-slate-950/80 border border-slate-800 flex items-start gap-3 text-xs text-slate-300">
                 <ShieldCheck className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
                 <div>
-                  <span className="font-bold text-white block mb-0.5">Atomic Bay Hold Guaranteed</span>
-                  When you click Reserve & Pay, this stall is immediately placed on hold in the database to prevent duplicate bookings.
+                  <span className="font-bold text-white block mb-0.5">Instant Bay Reservation & Invoice Guarantee</span>
+                  When you confirm, this stall is immediately locked in the central database and your official Tamil Nadu smart parking tax invoice with access pass is generated.
                 </div>
               </div>
 
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-full py-3.5 px-6 bg-brand-600 hover:bg-brand-500 disabled:opacity-50 text-white font-bold rounded-2xl shadow-xl shadow-brand-600/30 transition-all flex items-center justify-center gap-2 text-sm"
+                className="w-full py-4 px-6 bg-brand-600 hover:bg-brand-500 disabled:opacity-50 text-white font-extrabold rounded-2xl shadow-xl shadow-brand-600/30 transition-all flex items-center justify-center gap-2 text-sm sm:text-base"
               >
                 {submitting ? (
                   <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                 ) : (
                   <>
-                    <span>Book & Pay Now</span>
-                    <ArrowRight className="w-4 h-4" />
+                    <span>Confirm Reservation & Generate Invoice</span>
+                    <ArrowRight className="w-5 h-5" />
                   </>
                 )}
               </button>
@@ -215,7 +242,7 @@ export default function BookingPage() {
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-slate-400">Hourly Rate</span>
-                <span className="font-semibold text-slate-200">${slot?.pricePerHour.toFixed(2)}/hr</span>
+                <span className="font-semibold text-slate-200">₹{(slot?.pricePerHour || hourlyRate).toFixed(2)}/hr</span>
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-slate-400">Estimated Duration</span>
@@ -227,15 +254,15 @@ export default function BookingPage() {
             <div className="pt-4 border-t border-slate-800 space-y-2 text-xs">
               <div className="flex justify-between text-slate-400">
                 <span>Base Subtotal</span>
-                <span>${(diffHours * hourlyRate).toFixed(2)}</span>
+                <span>₹{(diffHours * hourlyRate).toFixed(2)}</span>
               </div>
               <div className="flex justify-between text-slate-400">
                 <span>Urban Grid Service Fee</span>
-                <span className="text-emerald-400">$0.00 (Waived)</span>
+                <span className="text-emerald-400">₹0.00 (Waived)</span>
               </div>
               <div className="flex justify-between text-base font-black text-white pt-2 border-t border-slate-800/80">
                 <span>Total Due</span>
-                <span className="text-brand-400">${totalAmount.toFixed(2)}</span>
+                <span className="text-brand-400">₹{totalAmount.toFixed(2)}</span>
               </div>
             </div>
           </div>

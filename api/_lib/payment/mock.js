@@ -7,7 +7,7 @@ import crypto from 'crypto';
 export const mockPaymentProvider = {
   name: 'MOCK',
 
-  async createOrder({ bookingId, amount, currency = 'USD' }) {
+  async createOrder({ bookingId, amount, currency = 'INR' }) {
     const orderId = `mock_ord_${crypto.randomBytes(8).toString('hex')}`;
     return {
       provider: 'MOCK',

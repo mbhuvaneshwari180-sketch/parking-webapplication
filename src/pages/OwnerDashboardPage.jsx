@@ -92,7 +92,7 @@ export default function OwnerDashboardPage() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard
           title="Gross Revenue"
-          value={`$${summary.totalRevenue.toFixed(2)}`}
+          value={`₹${summary.totalRevenue.toFixed(2)}`}
           subtext="Total processed customer bookings"
           icon={DollarSign}
           trend="+18.4%"
@@ -158,7 +158,7 @@ export default function OwnerDashboardPage() {
                       <td className="py-3 px-4 text-slate-400">
                         {new Date(r.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} - {new Date(r.endTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                       </td>
-                      <td className="py-3 px-4 font-semibold text-emerald-400">${r.amount.toFixed(2)}</td>
+                      <td className="py-3 px-4 font-semibold text-emerald-400">₹{r.amount.toFixed(2)}</td>
                       <td className="py-3 px-4">
                         <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-950 text-emerald-400 border border-emerald-800">
                           {r.status}

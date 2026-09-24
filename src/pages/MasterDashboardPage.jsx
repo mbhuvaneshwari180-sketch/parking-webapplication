@@ -266,7 +266,7 @@ export default function MasterDashboardPage() {
                       <span className="font-bold text-white text-sm">{cityData.city}</span>
                       <div className="flex items-center gap-4 text-slate-400">
                         <span>{cityData.parkingsCount} facilities</span>
-                        <span className="font-semibold text-emerald-400">${cityData.totalRevenue.toFixed(2)}</span>
+                        <span className="font-semibold text-emerald-400">₹{cityData.totalRevenue.toFixed(2)}</span>
                         <span className="font-bold text-sky-400 font-mono">{cityData.bookingsCount} bookings</span>
                       </div>
                     </div>

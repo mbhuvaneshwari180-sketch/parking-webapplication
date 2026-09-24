@@ -116,8 +116,8 @@ export default function ConfirmationPage() {
               </span>
             </div>
             <div>
-              <span className="text-slate-400 block mb-1">Amount Paid</span>
-              <span className="font-bold text-emerald-400 text-sm">${booking?.amount.toFixed(2)}</span>
+              <span className="text-slate-400 block mb-1">Total Invoiced</span>
+              <span className="font-bold text-emerald-400 text-sm">₹{booking?.amount.toFixed(2)}</span>
             </div>
           </div>
 
@@ -149,13 +149,22 @@ export default function ConfirmationPage() {
             ← View All My Bookings
           </Link>
 
-          <Link
-            to={`/ticket/${booking?.id}`}
-            className="w-full sm:w-auto px-5 py-2.5 bg-brand-600 hover:bg-brand-500 text-white text-xs font-bold rounded-xl shadow-md transition-all flex items-center justify-center gap-1.5"
-          >
-            <Ticket className="w-4 h-4" />
-            <span>Digital Ticket & Pass</span>
-          </Link>
+          <div className="flex items-center gap-2">
+            <Link
+              to={`/checkout/${booking?.id}`}
+              className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white rounded-xl text-xs font-bold transition-all border border-slate-700"
+            >
+              View Official Invoice
+            </Link>
+
+            <Link
+              to={`/ticket/${booking?.id}`}
+              className="w-full sm:w-auto px-5 py-2.5 bg-brand-600 hover:bg-brand-500 text-white text-xs font-bold rounded-xl shadow-md transition-all flex items-center justify-center gap-1.5"
+            >
+              <Ticket className="w-4 h-4" />
+              <span>Digital Ticket & Pass</span>
+            </Link>
+          </div>
         </div>
       </div>
     </div>

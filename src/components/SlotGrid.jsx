@@ -106,7 +106,7 @@ export default function SlotGrid({ slots = [], selectedSlot = null, onSelectSlot
                 <div className="space-y-1.5 w-full">
                   <div className="flex items-center justify-between text-xs">
                     <span className="text-slate-400">Rate:</span>
-                    <span className="font-bold text-white">${slot.pricePerHour.toFixed(2)}/hr</span>
+                    <span className="font-bold text-white">₹{slot.pricePerHour.toFixed(2)}/hr</span>
                   </div>
                   <div className="pt-1 border-t border-slate-800/60">
                     {getStatusBadge(slot.status)}

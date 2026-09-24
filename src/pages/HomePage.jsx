@@ -30,7 +30,7 @@ export default function HomePage() {
     navigate(`/parkings?${params.toString()}`);
   };
 
-  const quickCities = ['San Francisco', 'New York', 'Seattle', 'Bangalore'];
+  const quickCities = ['Chennai', 'T. Nagar', 'Velachery', 'Anna Salai', 'Marina Beach', 'Koyambedu'];
 
   return (
     <div className="space-y-24 pb-20">

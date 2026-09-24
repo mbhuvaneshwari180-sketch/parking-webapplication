@@ -68,13 +68,22 @@ export default function TicketPage() {
           <ChevronLeft className="w-4 h-4" /> My Bookings
         </Link>
 
-        <button
-          onClick={handlePrint}
-          className="px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold flex items-center gap-1.5 border border-slate-700 transition-colors"
-        >
-          <Printer className="w-3.5 h-3.5" />
-          <span>Print Pass</span>
-        </button>
+        <div className="flex items-center gap-2">
+          <Link
+            to={`/checkout/${booking.id}`}
+            className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-brand-300 hover:text-white text-xs font-semibold flex items-center gap-1 border border-slate-700 transition-colors"
+          >
+            <span>Tax Invoice</span>
+          </Link>
+
+          <button
+            onClick={handlePrint}
+            className="px-3.5 py-1.5 rounded-xl bg-brand-600 hover:bg-brand-500 text-white text-xs font-semibold flex items-center gap-1.5 shadow-md transition-colors"
+          >
+            <Printer className="w-3.5 h-3.5" />
+            <span>Print Pass</span>
+          </button>
+        </div>
       </div>
 
       {/* Modern Smart Boarding Pass Style Card */}

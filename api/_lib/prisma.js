@@ -31,7 +31,7 @@ class LocalStore {
 
     const commuter = {
       id: 'usr_commuter_01',
-      name: 'Alex Rivera (Commuter)',
+      name: 'K. Anbarasan (Commuter)',
       email: 'commuter@demo.com',
       password: passwordHash,
       role: 'COMMUTER',
@@ -42,7 +42,7 @@ class LocalStore {
 
     const owner = {
       id: 'usr_owner_01',
-      name: 'Elena Rostova (Parking Owner)',
+      name: 'Sundar Raman (Facility Partner)',
       email: 'owner@demo.com',
       password: passwordHash,
       role: 'OWNER',
@@ -53,7 +53,7 @@ class LocalStore {
 
     const admin = {
       id: 'usr_admin_01',
-      name: 'Marcus Vance (City Admin)',
+      name: 'K. Rajeshwaran (Chennai City Admin)',
       email: 'admin@demo.com',
       password: passwordHash,
       role: 'ADMIN',
@@ -64,7 +64,7 @@ class LocalStore {
 
     const masterAdmin = {
       id: 'usr_master_01',
-      name: 'Sophia Thorne (Master Administrator)',
+      name: 'Dr. Mythili Velan (GCC Master Admin)',
       email: 'masteradmin@demo.com',
       password: passwordHash,
       role: 'MASTER_ADMIN',
@@ -75,15 +75,15 @@ class LocalStore {
 
     this.users = [commuter, owner, admin, masterAdmin];
 
-    // Seed Parkings & Slots
+    // Seed Chennai, Tamil Nadu Parkings & Slots
     const p1 = {
-      id: 'pkg_sf_01',
-      name: 'Metroplex Central Tower Parking',
-      address: '450 Mission Street, Financial District',
-      city: 'San Francisco',
-      description: 'Underground multi-level secure parking with automated license plate recognition, 24/7 CCTV, and high-speed EV chargers.',
-      latitude: 37.7909,
-      longitude: -122.3999,
+      id: 'pkg_chn_01',
+      name: 'T. Nagar Pondy Bazaar Smart MLCP',
+      address: 'Panagal Park, Sir Thyagaraya Road, T. Nagar',
+      city: 'Chennai',
+      description: 'Greater Chennai Corporation (GCC) automated multi-level smart parking facility with 7 floors, automated car elevators, live sensor displays, and direct access to Pondy Bazaar Pedestrian Plaza.',
+      latitude: 13.0405,
+      longitude: 80.2337,
       imageUrl: 'https://images.unsplash.com/photo-1506521781263-d8422e82f27a?auto=format&fit=crop&w=1200&q=80',
       ownerId: owner.id,
       createdAt: new Date(),
@@ -91,13 +91,13 @@ class LocalStore {
     };
 
     const p2 = {
-      id: 'pkg_ny_01',
-      name: 'Grand Central Smart Hub',
-      address: '100 East 42nd St, Midtown',
-      city: 'New York',
-      description: 'Prime Midtown Manhattan multi-tiered parking terminal right beside Grand Central. Fully climate controlled with valet assistance.',
-      latitude: 40.7516,
-      longitude: -73.9772,
+      id: 'pkg_chn_02',
+      name: 'Velachery Phoenix & Grand Smart Hub',
+      address: '142 Velachery Main Road, Indira Gandhi Nagar, Velachery',
+      city: 'Chennai',
+      description: 'Modern smart parking terminal with automated ANPR cameras, covered basement levels, 24/7 CCTV surveillance, and dedicated EV charging bays.',
+      latitude: 12.9915,
+      longitude: 80.2170,
       imageUrl: 'https://images.unsplash.com/photo-1590674899484-d5640e854abe?auto=format&fit=crop&w=1200&q=80',
       ownerId: owner.id,
       createdAt: new Date(),
@@ -105,13 +105,13 @@ class LocalStore {
     };
 
     const p3 = {
-      id: 'pkg_sea_01',
-      name: 'Pike Place Harbor Garage',
-      address: '1531 Western Ave, Waterfront',
-      city: 'Seattle',
-      description: 'Convenient covered parking near waterfront dining, Pike Place Market, and ferry docks with solar-powered charging stalls.',
-      latitude: 47.6085,
-      longitude: -122.3402,
+      id: 'pkg_chn_03',
+      name: 'Marina Beach & Light House Metro Hub',
+      address: 'Kamarajar Promenade, Triplicane, Marina Beach',
+      city: 'Chennai',
+      description: 'High-capacity beachside smart parking facility equipped with dynamic LED guidance, solar shaded stalls, automated barrier gates, and pedestrian walkways.',
+      latitude: 13.0499,
+      longitude: 80.2824,
       imageUrl: 'https://images.unsplash.com/photo-1573348722427-f1d6819fdf98?auto=format&fit=crop&w=1200&q=80',
       ownerId: owner.id,
       createdAt: new Date(),
@@ -119,56 +119,78 @@ class LocalStore {
     };
 
     const p4 = {
-      id: 'pkg_blr_01',
-      name: 'Silicon Hub Tech Plaza',
-      address: '100 Feet Ring Road, Indiranagar',
-      city: 'Bangalore',
-      description: 'Modern urban parking facility with biometric entry, shaded bays, and fast 60kW DC EV fast chargers.',
-      latitude: 12.9716,
-      longitude: 77.5946,
+      id: 'pkg_chn_04',
+      name: 'Anna Salai Express Avenue Central Hub',
+      address: 'Whites Road, Royapettah / Anna Salai (Near Thousand Lights Metro)',
+      city: 'Chennai',
+      description: 'Central Chennai prime parking zone with contactless RFID fast entry, multi-tier security, valet assistance, and round-the-clock power backup.',
+      latitude: 13.0587,
+      longitude: 80.2609,
       imageUrl: 'https://images.unsplash.com/photo-1508873696983-2df5293cb32b?auto=format&fit=crop&w=1200&q=80',
       ownerId: owner.id,
       createdAt: new Date(),
       updatedAt: new Date(),
     };
 
-    this.parkings = [p1, p2, p3, p4];
+    const p5 = {
+      id: 'pkg_chn_05',
+      name: 'CMBT Koyambedu Integrated Transit Hub',
+      address: 'Inner Ring Road, Koyambedu, Chennai - 600107',
+      city: 'Chennai',
+      description: 'Integrated multimodal transit parking facility catering to intercity travelers, metro commuters, and suburban bus passengers.',
+      latitude: 13.0694,
+      longitude: 80.1948,
+      imageUrl: 'https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?auto=format&fit=crop&w=1200&q=80',
+      ownerId: owner.id,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
 
-    // Slots for p1
+    this.parkings = [p1, p2, p3, p4, p5];
+
+    // Slots for p1 (T. Nagar)
     this.slots.push(
-      { id: 's_101', parkingId: p1.id, code: 'A-01', type: 'CAR', status: 'AVAILABLE', pricePerHour: 8.5 },
-      { id: 's_102', parkingId: p1.id, code: 'A-02', type: 'CAR', status: 'OCCUPIED', pricePerHour: 8.5 },
-      { id: 's_103', parkingId: p1.id, code: 'A-03', type: 'CAR', status: 'AVAILABLE', pricePerHour: 8.5 },
-      { id: 's_104', parkingId: p1.id, code: 'A-04', type: 'EV', status: 'AVAILABLE', pricePerHour: 12.0 },
-      { id: 's_105', parkingId: p1.id, code: 'A-05', type: 'EV', status: 'RESERVED', pricePerHour: 12.0 },
-      { id: 's_106', parkingId: p1.id, code: 'B-01', type: 'BIKE', status: 'AVAILABLE', pricePerHour: 3.0 },
-      { id: 's_107', parkingId: p1.id, code: 'B-02', type: 'BIKE', status: 'AVAILABLE', pricePerHour: 3.0 },
-      { id: 's_108', parkingId: p1.id, code: 'B-03', type: 'CAR', status: 'MAINTENANCE', pricePerHour: 8.5 }
+      { id: 's_101', parkingId: p1.id, code: 'TN-01', type: 'CAR', status: 'AVAILABLE', pricePerHour: 40.0 },
+      { id: 's_102', parkingId: p1.id, code: 'TN-02', type: 'CAR', status: 'OCCUPIED', pricePerHour: 40.0 },
+      { id: 's_103', parkingId: p1.id, code: 'TN-03', type: 'CAR', status: 'AVAILABLE', pricePerHour: 40.0 },
+      { id: 's_104', parkingId: p1.id, code: 'TN-E1', type: 'EV', status: 'AVAILABLE', pricePerHour: 60.0 },
+      { id: 's_105', parkingId: p1.id, code: 'TN-E2', type: 'EV', status: 'RESERVED', pricePerHour: 60.0 },
+      { id: 's_106', parkingId: p1.id, code: 'TN-B1', type: 'BIKE', status: 'AVAILABLE', pricePerHour: 15.0 },
+      { id: 's_107', parkingId: p1.id, code: 'TN-B2', type: 'BIKE', status: 'AVAILABLE', pricePerHour: 15.0 },
+      { id: 's_108', parkingId: p1.id, code: 'TN-04', type: 'CAR', status: 'MAINTENANCE', pricePerHour: 40.0 }
     );
 
-    // Slots for p2
+    // Slots for p2 (Velachery Phoenix)
     this.slots.push(
-      { id: 's_201', parkingId: p2.id, code: 'NY-101', type: 'CAR', status: 'AVAILABLE', pricePerHour: 14.0 },
-      { id: 's_202', parkingId: p2.id, code: 'NY-102', type: 'CAR', status: 'AVAILABLE', pricePerHour: 14.0 },
-      { id: 's_203', parkingId: p2.id, code: 'NY-103', type: 'EV', status: 'AVAILABLE', pricePerHour: 18.0 },
-      { id: 's_204', parkingId: p2.id, code: 'NY-104', type: 'EV', status: 'OCCUPIED', pricePerHour: 18.0 },
-      { id: 's_205', parkingId: p2.id, code: 'NY-BK1', type: 'BIKE', status: 'AVAILABLE', pricePerHour: 5.0 }
+      { id: 's_201', parkingId: p2.id, code: 'VLC-101', type: 'CAR', status: 'AVAILABLE', pricePerHour: 50.0 },
+      { id: 's_202', parkingId: p2.id, code: 'VLC-102', type: 'CAR', status: 'AVAILABLE', pricePerHour: 50.0 },
+      { id: 's_203', parkingId: p2.id, code: 'VLC-E1', type: 'EV', status: 'AVAILABLE', pricePerHour: 75.0 },
+      { id: 's_204', parkingId: p2.id, code: 'VLC-E2', type: 'EV', status: 'OCCUPIED', pricePerHour: 75.0 },
+      { id: 's_205', parkingId: p2.id, code: 'VLC-B1', type: 'BIKE', status: 'AVAILABLE', pricePerHour: 20.0 }
     );
 
-    // Slots for p3
+    // Slots for p3 (Marina Beach)
     this.slots.push(
-      { id: 's_301', parkingId: p3.id, code: 'SEA-01', type: 'CAR', status: 'AVAILABLE', pricePerHour: 7.0 },
-      { id: 's_302', parkingId: p3.id, code: 'SEA-02', type: 'CAR', status: 'AVAILABLE', pricePerHour: 7.0 },
-      { id: 's_303', parkingId: p3.id, code: 'SEA-03', type: 'EV', status: 'AVAILABLE', pricePerHour: 10.5 },
-      { id: 's_304', parkingId: p3.id, code: 'SEA-B1', type: 'BIKE', status: 'AVAILABLE', pricePerHour: 2.5 }
+      { id: 's_301', parkingId: p3.id, code: 'MRN-01', type: 'CAR', status: 'AVAILABLE', pricePerHour: 30.0 },
+      { id: 's_302', parkingId: p3.id, code: 'MRN-02', type: 'CAR', status: 'AVAILABLE', pricePerHour: 30.0 },
+      { id: 's_303', parkingId: p3.id, code: 'MRN-E1', type: 'EV', status: 'AVAILABLE', pricePerHour: 50.0 },
+      { id: 's_304', parkingId: p3.id, code: 'MRN-B1', type: 'BIKE', status: 'AVAILABLE', pricePerHour: 10.0 }
     );
 
-    // Slots for p4
+    // Slots for p4 (Anna Salai EA)
     this.slots.push(
-      { id: 's_401', parkingId: p4.id, code: 'BLR-01', type: 'CAR', status: 'AVAILABLE', pricePerHour: 4.0 },
-      { id: 's_402', parkingId: p4.id, code: 'BLR-02', type: 'CAR', status: 'AVAILABLE', pricePerHour: 4.0 },
-      { id: 's_403', parkingId: p4.id, code: 'BLR-03', type: 'EV', status: 'AVAILABLE', pricePerHour: 6.5 },
-      { id: 's_404', parkingId: p4.id, code: 'BLR-B1', type: 'BIKE', status: 'AVAILABLE', pricePerHour: 1.5 }
+      { id: 's_401', parkingId: p4.id, code: 'ANS-01', type: 'CAR', status: 'AVAILABLE', pricePerHour: 45.0 },
+      { id: 's_402', parkingId: p4.id, code: 'ANS-02', type: 'CAR', status: 'AVAILABLE', pricePerHour: 45.0 },
+      { id: 's_403', parkingId: p4.id, code: 'ANS-E1', type: 'EV', status: 'AVAILABLE', pricePerHour: 65.0 },
+      { id: 's_404', parkingId: p4.id, code: 'ANS-B1', type: 'BIKE', status: 'AVAILABLE', pricePerHour: 15.0 }
+    );
+
+    // Slots for p5 (CMBT Koyambedu)
+    this.slots.push(
+      { id: 's_501', parkingId: p5.id, code: 'CMB-01', type: 'CAR', status: 'AVAILABLE', pricePerHour: 35.0 },
+      { id: 's_502', parkingId: p5.id, code: 'CMB-02', type: 'CAR', status: 'AVAILABLE', pricePerHour: 35.0 },
+      { id: 's_503', parkingId: p5.id, code: 'CMB-E1', type: 'EV', status: 'AVAILABLE', pricePerHour: 55.0 },
+      { id: 's_504', parkingId: p5.id, code: 'CMB-B1', type: 'BIKE', status: 'AVAILABLE', pricePerHour: 10.0 }
     );
 
     // Initial Booking
@@ -179,7 +201,7 @@ class LocalStore {
       slotId: 's_105',
       startTime: new Date(),
       endTime: new Date(Date.now() + 2 * 60 * 60 * 1000),
-      amount: 24.0,
+      amount: 120.0,
       status: 'CONFIRMED',
       paymentStatus: 'PAID',
       qrToken: 'PS-TK-DEMO99482103',
@@ -231,6 +253,19 @@ const db = {
   },
 
   user: {
+    async findFirst({ where = {}, select }) {
+      if (isPrismaConnected && rawPrisma) {
+        try { return await rawPrisma.user.findFirst({ where, select }); } catch {}
+      }
+      let found = local.users[0];
+      if (where.role) found = local.users.find(u => u.role === where.role) || found;
+      if (where.email) found = local.users.find(u => u.email.toLowerCase() === where.email.toLowerCase()) || found;
+      if (!found) return null;
+      if (!select) return found;
+      const res = {};
+      Object.keys(select).forEach(k => { if (select[k]) res[k] = found[k]; });
+      return res;
+    },
     async findUnique({ where, select }) {
       if (isPrismaConnected && rawPrisma) {
         try { return await rawPrisma.user.findUnique({ where, select }); } catch {}

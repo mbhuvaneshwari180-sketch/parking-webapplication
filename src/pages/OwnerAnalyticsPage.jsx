@@ -65,7 +65,7 @@ export default function OwnerAnalyticsPage() {
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <StatCard
           title="Total Platform Revenue"
-          value={`$${summary.totalRevenue.toFixed(2)}`}
+          value={`₹${summary.totalRevenue.toFixed(2)}`}
           subtext="Processed payments from reservations"
           icon={DollarSign}
           trend="+18.4%"
@@ -109,7 +109,7 @@ export default function OwnerAnalyticsPage() {
                   : 'text-slate-400 hover:text-white'
               }`}
             >
-              Daily Revenue ($)
+              Daily Revenue (₹)
             </button>
             <button
               onClick={() => setActiveTab('PEAK_HOURS')}
@@ -141,7 +141,7 @@ export default function OwnerAnalyticsPage() {
                 return (
                   <div key={idx} className="flex-1 flex flex-col items-center gap-2 h-full justify-end group">
                     <span className="text-[10px] font-bold text-emerald-400 opacity-0 group-hover:opacity-100 transition-opacity">
-                      ${item.revenue}
+                      ₹{item.revenue}
                     </span>
                     <div
                       style={{ height: `${heightPercent}%` }}

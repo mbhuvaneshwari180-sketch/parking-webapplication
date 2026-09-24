@@ -2,9 +2,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import { MapPin, Navigation, Compass, Layers } from 'lucide-react';
 
 export default function RadarMap({
-  latitude = 37.7909,
-  longitude = -122.3999,
-  name = 'Parking Location',
+  latitude = 13.0405,
+  longitude = 80.2337,
+  name = 'Chennai Smart Parking Hub',
   address = '',
   markers = [],
   onMarkerClick,

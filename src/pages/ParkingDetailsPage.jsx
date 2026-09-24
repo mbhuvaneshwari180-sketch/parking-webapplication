@@ -123,7 +123,7 @@ export default function ParkingDetailsPage() {
             <div className="bg-slate-900/80 border border-slate-800 p-4 rounded-2xl text-center">
               <span className="text-xs text-slate-400 block font-medium">Rates From</span>
               <span className="text-2xl font-black text-white mt-1 block">
-                ${minPrice.toFixed(2)}<span className="text-xs text-slate-400 font-normal">/hr</span>
+                ₹{minPrice.toFixed(2)}<span className="text-xs text-slate-400 font-normal">/hr</span>
               </span>
             </div>
           </div>

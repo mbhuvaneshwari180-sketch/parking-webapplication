@@ -32,10 +32,10 @@ export default function ParkingManagementPage() {
   const [newParking, setNewParking] = useState({
     name: '',
     address: '',
-    city: 'San Francisco',
+    city: 'Chennai',
     description: '',
-    latitude: 37.7749,
-    longitude: -122.4194,
+    latitude: 13.0405,
+    longitude: 80.2337,
     imageUrl: '',
   });
 
@@ -46,7 +46,7 @@ export default function ParkingManagementPage() {
   const [newSlot, setNewSlot] = useState({
     code: '',
     type: 'CAR',
-    pricePerHour: 10.0,
+    pricePerHour: 40.0,
     status: 'AVAILABLE',
   });
 
@@ -108,10 +108,10 @@ export default function ParkingManagementPage() {
       setNewParking({
         name: '',
         address: '',
-        city: 'San Francisco',
+        city: 'Chennai',
         description: '',
-        latitude: 37.7749,
-        longitude: -122.4194,
+        latitude: 13.0405,
+        longitude: 80.2337,
         imageUrl: '',
       });
       await fetchOwnerParkings();
@@ -308,7 +308,7 @@ export default function ParkingManagementPage() {
                     >
                       <div className="font-mono font-bold text-sm text-white">{s.code}</div>
                       <div className="text-[10px] text-slate-400">{s.type}</div>
-                      <div className="text-[10px] font-semibold text-white mt-1">${s.pricePerHour}/hr</div>
+                      <div className="text-[10px] font-semibold text-white mt-1">₹{s.pricePerHour}/hr</div>
                       <div className="text-[9px] uppercase font-bold mt-1 tracking-wider opacity-80">
                         {s.status}
                       </div>

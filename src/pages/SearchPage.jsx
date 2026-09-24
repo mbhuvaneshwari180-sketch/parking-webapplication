@@ -245,7 +245,7 @@ export default function SearchPage() {
                 <div className="pt-4 border-t border-slate-800/80 flex items-center justify-between">
                   <div>
                     <span className="text-[11px] text-slate-400 block">Starting from</span>
-                    <span className="text-lg font-black text-white">${p.minPrice.toFixed(2)}</span>
+                    <span className="text-lg font-black text-white">₹{p.minPrice.toFixed(2)}</span>
                     <span className="text-xs text-slate-400">/hr</span>
                   </div>
 

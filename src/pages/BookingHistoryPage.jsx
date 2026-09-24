@@ -11,7 +11,8 @@ import {
   CheckCircle2, 
   AlertCircle,
   ExternalLink,
-  ChevronRight
+  ChevronRight,
+  Receipt
 } from 'lucide-react';
 
 export default function BookingHistoryPage() {
@@ -169,28 +170,27 @@ export default function BookingHistoryPage() {
                 <div className="flex items-center justify-between md:justify-end gap-4 border-t md:border-t-0 pt-3 md:pt-0 border-slate-800">
                   <div className="text-left md:text-right">
                     <span className="text-[11px] text-slate-400 block">Total</span>
-                    <span className="text-xl font-black text-white">${b.amount.toFixed(2)}</span>
+                    <span className="text-xl font-black text-white">₹{b.amount.toFixed(2)}</span>
                   </div>
 
                   <div className="flex items-center gap-2">
+                    {/* View Tax Invoice */}
+                    <Link
+                      to={`/checkout/${b.id}`}
+                      className="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-colors border border-slate-700"
+                    >
+                      <Receipt className="w-3.5 h-3.5 text-brand-400" />
+                      <span>Invoice</span>
+                    </Link>
+
                     {/* View Digital Pass */}
                     <Link
                       to={`/ticket/${b.id}`}
-                      className="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-colors border border-slate-700"
+                      className="px-3.5 py-2 bg-brand-600/80 hover:bg-brand-600 text-white rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-colors shadow-sm"
                     >
-                      <Ticket className="w-3.5 h-3.5 text-sky-400" />
+                      <Ticket className="w-3.5 h-3.5" />
                       <span>Pass / QR</span>
                     </Link>
-
-                    {/* Pay if pending */}
-                    {b.status === 'PENDING' && b.paymentStatus === 'UNPAID' && (
-                      <Link
-                        to={`/checkout/${b.id}`}
-                        className="px-3.5 py-2 bg-brand-600 hover:bg-brand-500 text-white rounded-xl text-xs font-bold transition-all shadow-md"
-                      >
-                        Pay Now
-                      </Link>
-                    )}
 
                     {/* Cancel Action */}
                     {isCancellable && (

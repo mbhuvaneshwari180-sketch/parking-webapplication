@@ -96,7 +96,7 @@ export default function AdminDashboardPage() {
         />
         <StatCard
           title="Gross Network Volume"
-          value={`$${(stats?.totalRevenue || 0).toFixed(2)}`}
+          value={`₹${(stats?.totalRevenue || 0).toFixed(2)}`}
           subtext="Across all terminal nodes"
           icon={DollarSign}
           color="purple"
