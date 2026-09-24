@@ -71,3 +71,5 @@ jspm_packages/
 dist/
 build/
 .dist/
+
+.vercel
