@@ -1,0 +1,228 @@
+{
+  "info": {
+    "name": "ParkingSpot API",
+    "description": "Production-grade REST API collection for ParkingSpot Smart Parking Reservation Ecosystem",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:5000/api", "type": "string" },
+    { "key": "token", "value": "", "type": "string" },
+    { "key": "parkingId", "value": "", "type": "string" },
+    { "key": "slotId", "value": "", "type": "string" },
+    { "key": "bookingId", "value": "", "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register Commuter",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Alex Rivera\",\n  \"email\": \"alex.test@example.com\",\n  \"password\": \"Password123!\",\n  \"role\": \"COMMUTER\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/auth/register", "host": ["{{baseUrl}}"], "path": ["auth", "register"] }
+          }
+        },
+        {
+          "name": "Login (Commuter / Owner / Admin / Master)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"masteradmin@demo.com\",\n  \"password\": \"Password123!\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/auth/login", "host": ["{{baseUrl}}"], "path": ["auth", "login"] }
+          }
+        },
+        {
+          "name": "Get Current Session User (Me)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/auth/me", "host": ["{{baseUrl}}"], "path": ["auth", "me"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Parkings & Slots",
+      "item": [
+        {
+          "name": "List / Search Garages",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/parkings?query=Central&city=San Francisco&type=EV",
+              "host": ["{{baseUrl}}"],
+              "path": ["parkings"],
+              "query": [
+                { "key": "query", "value": "Central" },
+                { "key": "city", "value": "San Francisco" },
+                { "key": "type", "value": "EV" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Parking Facility By ID",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/parkings/{{parkingId}}", "host": ["{{baseUrl}}"], "path": ["parkings", "{{parkingId}}"] }
+          }
+        },
+        {
+          "name": "Get Live Slots (Poll-Friendly)",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/parkings/{{parkingId}}/slots", "host": ["{{baseUrl}}"], "path": ["parkings", "{{parkingId}}", "slots"] }
+          }
+        },
+        {
+          "name": "Create Parking Facility (Owner)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Financial District Express Deck\",\n  \"address\": \"555 California St\",\n  \"city\": \"San Francisco\",\n  \"description\": \"Heated subterranean parking with 24/7 biometric gate entry.\",\n  \"latitude\": 37.7925,\n  \"longitude\": -122.4042,\n  \"imageUrl\": \"https://images.unsplash.com/photo-1506521781263-d8422e82f27a?auto=format&fit=crop&w=1200&q=80\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/parkings", "host": ["{{baseUrl}}"], "path": ["parkings"] }
+          }
+        },
+        {
+          "name": "Add Bay Slot to Parking (Owner)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"EV-09\",\n  \"type\": \"EV\",\n  \"pricePerHour\": 15.0,\n  \"status\": \"AVAILABLE\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/parkings/{{parkingId}}/slots", "host": ["{{baseUrl}}"], "path": ["parkings", "{{parkingId}}", "slots"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Bookings & Tickets",
+      "item": [
+        {
+          "name": "Create Reservation (Atomic Double-Booking Protection)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"parkingId\": \"{{parkingId}}\",\n  \"slotId\": \"{{slotId}}\",\n  \"startTime\": \"2026-09-24T18:00:00.000Z\",\n  \"endTime\": \"2026-09-24T20:00:00.000Z\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/bookings", "host": ["{{baseUrl}}"], "path": ["bookings"] }
+          }
+        },
+        {
+          "name": "Get My Bookings History",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/bookings/mine", "host": ["{{baseUrl}}"], "path": ["bookings", "mine"] }
+          }
+        },
+        {
+          "name": "Get Booking Details + QR Pass",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/bookings/{{bookingId}}", "host": ["{{baseUrl}}"], "path": ["bookings", "{{bookingId}}"] }
+          }
+        },
+        {
+          "name": "Pay Invoice & Confirm Booking",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"provider\": \"MOCK\",\n  \"paymentId\": \"pay_sandbox_123456\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/bookings/{{bookingId}}/pay", "host": ["{{baseUrl}}"], "path": ["bookings", "{{bookingId}}", "pay"] }
+          }
+        },
+        {
+          "name": "Cancel Booking & Free Slot",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/bookings/{{bookingId}}/cancel", "host": ["{{baseUrl}}"], "path": ["bookings", "{{bookingId}}", "cancel"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Master Super-Admin",
+      "item": [
+        {
+          "name": "Master Overview Telemetry",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/master/overview", "host": ["{{baseUrl}}"], "path": ["master", "overview"] }
+          }
+        },
+        {
+          "name": "Update User Role (Promote / Demote)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"role\": \"ADMIN\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/master/users/USER_ID/role", "host": ["{{baseUrl}}"], "path": ["master", "users", "USER_ID", "role"] }
+          }
+        },
+        {
+          "name": "Manual Booking Override (Force Refund / Cancel)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"FORCE_REFUND\",\n  \"note\": \"Manual customer concession approved by Super Admin\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/master/bookings/{{bookingId}}/override", "host": ["{{baseUrl}}"], "path": ["master", "bookings", "{{bookingId}}", "override"] }
+          }
+        },
+        {
+          "name": "Get Audit Log Ledger",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/master/audit-logs?limit=50", "host": ["{{baseUrl}}"], "path": ["master", "audit-logs"] }
+          }
+        }
+      ]
+    }
+  ]
+}

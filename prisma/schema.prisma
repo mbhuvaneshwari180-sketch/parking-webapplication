@@ -1,0 +1,123 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        String     @id @default(cuid())
+  name      String
+  email     String     @unique
+  password  String
+  role      Role       @default(COMMUTER)
+  status    UserStatus @default(ACTIVE)
+  parkings  Parking[]  @relation("OwnerParkings")
+  bookings  Booking[]
+  auditLogs AuditLog[] @relation("ActorLogs")
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+enum Role {
+  COMMUTER
+  OWNER
+  ADMIN
+  MASTER_ADMIN
+}
+
+enum UserStatus {
+  ACTIVE
+  SUSPENDED
+}
+
+model Parking {
+  id          String    @id @default(cuid())
+  name        String
+  address     String
+  city        String
+  description String?
+  latitude    Float
+  longitude   Float
+  imageUrl    String?
+  owner       User      @relation("OwnerParkings", fields: [ownerId], references: [id], onDelete: Cascade)
+  ownerId     String
+  slots       Slot[]
+  bookings    Booking[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Slot {
+  id            String      @id @default(cuid())
+  code          String
+  type          VehicleType
+  status        SlotStatus  @default(AVAILABLE)
+  pricePerHour  Float
+  parking       Parking     @relation(fields: [parkingId], references: [id], onDelete: Cascade)
+  parkingId     String
+  bookings      Booking[]
+}
+
+enum VehicleType {
+  CAR
+  BIKE
+  EV
+}
+
+enum SlotStatus {
+  AVAILABLE
+  OCCUPIED
+  RESERVED
+  MAINTENANCE
+}
+
+model Booking {
+  id            String        @id @default(cuid())
+  user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId        String
+  parking       Parking       @relation(fields: [parkingId], references: [id], onDelete: Cascade)
+  parkingId     String
+  slot          Slot          @relation(fields: [slotId], references: [id], onDelete: Cascade)
+  slotId        String
+  startTime     DateTime
+  endTime       DateTime
+  amount        Float
+  status        BookingStatus @default(PENDING)
+  paymentStatus PaymentStatus @default(UNPAID)
+  qrToken       String        @unique
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+}
+
+enum PaymentStatus {
+  UNPAID
+  PAID
+  REFUNDED
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  actor     User     @relation("ActorLogs", fields: [actorId], references: [id], onDelete: Cascade)
+  actorId   String
+  action    String
+  target    String
+  metadata  Json?
+  createdAt DateTime @default(now())
+}
+
+model SystemSetting {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     Json
+  updatedAt DateTime @updatedAt
+}
