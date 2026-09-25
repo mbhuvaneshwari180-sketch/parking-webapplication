@@ -1,5 +1,5 @@
 datasource db {
-  provider = "mongodb"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -8,7 +8,7 @@ generator client {
 }
 
 model User {
-  id        String     @id @default(auto()) @map("_id") @db.ObjectId
+  id        String     @id @default(cuid())
   name      String
   email     String     @unique
   password  String
@@ -34,7 +34,7 @@ enum UserStatus {
 }
 
 model Parking {
-  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  id          String    @id @default(cuid())
   name        String
   address     String
   city        String
@@ -43,7 +43,7 @@ model Parking {
   longitude   Float
   imageUrl    String?
   owner       User      @relation("OwnerParkings", fields: [ownerId], references: [id], onDelete: Cascade)
-  ownerId     String    @db.ObjectId
+  ownerId     String
   slots       Slot[]
   bookings    Booking[]
   createdAt   DateTime  @default(now())
@@ -51,13 +51,13 @@ model Parking {
 }
 
 model Slot {
-  id            String      @id @default(auto()) @map("_id") @db.ObjectId
+  id            String      @id @default(cuid())
   code          String
   type          VehicleType
   status        SlotStatus  @default(AVAILABLE)
   pricePerHour  Float
   parking       Parking     @relation(fields: [parkingId], references: [id], onDelete: Cascade)
-  parkingId     String      @db.ObjectId
+  parkingId     String
   bookings      Booking[]
 }
 
@@ -75,13 +75,13 @@ enum SlotStatus {
 }
 
 model Booking {
-  id            String        @id @default(auto()) @map("_id") @db.ObjectId
+  id            String        @id @default(cuid())
   user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId        String        @db.ObjectId
+  userId        String
   parking       Parking       @relation(fields: [parkingId], references: [id], onDelete: Cascade)
-  parkingId     String        @db.ObjectId
+  parkingId     String
   slot          Slot          @relation(fields: [slotId], references: [id], onDelete: Cascade)
-  slotId        String        @db.ObjectId
+  slotId        String
   startTime     DateTime
   endTime       DateTime
   amount        Float
@@ -106,9 +106,9 @@ enum PaymentStatus {
 }
 
 model AuditLog {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  id        String   @id @default(cuid())
   actor     User     @relation("ActorLogs", fields: [actorId], references: [id], onDelete: Cascade)
-  actorId   String   @db.ObjectId
+  actorId   String
   action    String
   target    String
   metadata  Json?
@@ -116,7 +116,7 @@ model AuditLog {
 }
 
 model SystemSetting {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  id        String   @id @default(cuid())
   key       String   @unique
   value     Json
   updatedAt DateTime @updatedAt

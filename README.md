@@ -5,9 +5,8 @@
 [![GitHub Repository](https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github)](https://github.com/mbhuvaneshwari180-sketch/parking-webapplication)
 [![Node.js](https://img.shields.io/badge/Node.js-18.x%20%7C%2020.x-339933?style=for-the-badge&logo=node.js)](https://nodejs.org)
 [![React](https://img.shields.io/badge/React-18.x-61DAFB?style=for-the-badge&logo=react)](https://react.dev)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.x-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com)
-[![Neon Postgres](https://img.shields.io/badge/Neon-Serverless%20Postgres-00E599?style=for-the-badge&logo=postgresql)](https://neon.tech)
-[![Prisma ORM](https://img.shields.io/badge/Prisma-6.x-2D3748?style=for-the-badge&logo=prisma)](https://www.prisma.io)
+[![MongoDB Atlas](https://img.shields.io/badge/MongoDB-Atlas%20Cloud-47A248?style=for-the-badge&logo=mongodb)](https://www.mongodb.com/cloud/atlas)
+[![Prisma ORM](https://img.shields.io/badge/Prisma-6.x%20(MongoDB)-2D3748?style=for-the-badge&logo=prisma)](https://www.prisma.io)
 
 ---
 
@@ -22,7 +21,7 @@ The platform solves urban traffic congestion, cruising delays, and parking scarc
 - **🎓 Institution**: J.N.N Institute of Engineering (JNN)
 - **👤 Project Author**: Mythili Velan (`vmythili70@jnn.edu.in`)
 - **🚀 Deployment Platform**: Vercel Serverless Edge Platform
-- **🗄️ Database**: Neon Serverless PostgreSQL (`sparkling-cherry-93081568`) + Zero-Downtime In-Memory Resilience Layer
+- **🗄️ Target Database**: MongoDB Atlas (Cloud BSON Document Database via Prisma ORM) + Zero-Downtime In-Memory Resilience Layer (PostgreSQL schema preserved in `prisma/schema.postgresql.prisma`)
 
 ---
 

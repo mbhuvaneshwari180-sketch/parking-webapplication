@@ -239,11 +239,11 @@ const local = new LocalStore();
 
 // Create the resilient proxy client
 const db = {
-  // Test connection to Postgres
+  // Test connection to Database (MongoDB & relational compatible)
   async testConnection() {
     if (!rawPrisma) return false;
     try {
-      await rawPrisma.$queryRaw`SELECT 1`;
+      await rawPrisma.systemSetting.findFirst();
       isPrismaConnected = true;
       return true;
     } catch {

@@ -59,15 +59,16 @@ router.get('/overview', async (req, res) => {
       })
     );
 
-    // Top-performing parkings
-    const topParkings = await prisma.parking.findMany({
-      take: 5,
+    // Top-performing parkings (MongoDB-compatible sorting)
+    const allParkingsForTop = await prisma.parking.findMany({
       include: {
         owner: { select: { name: true, email: true } },
         _count: { select: { bookings: true, slots: true } },
       },
-      orderBy: { bookings: { _count: 'desc' } },
     });
+    const topParkings = allParkingsForTop
+      .sort((a, b) => (b._count?.bookings || 0) - (a._count?.bookings || 0))
+      .slice(0, 5);
 
     return res.status(200).json({
       success: true,
